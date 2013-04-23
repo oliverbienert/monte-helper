@@ -1,0 +1,12 @@
+insert
+into
+    version
+    (
+        prog,
+        build
+    )
+    values
+    (
+        'montehelper',
+        0
+    )

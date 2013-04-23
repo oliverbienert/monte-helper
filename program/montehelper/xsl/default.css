@@ -1,0 +1,120 @@
+BODY
+{
+	background-color: #ffffff;
+	font-family : Arial, Helvetica, sans-serif;
+}
+
+H3
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight : bold;
+	color : Green;
+	margin-bottom : 0.5cm;
+}
+
+TH.border
+{
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+TD.border
+{
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+TH.border1
+{
+	padding: 2px;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+TD.border1
+{
+	padding: 2px;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+TH
+{
+	background-color: #AAAAAA;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 80%;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
+	padding: 5px;
+}
+
+TH.light
+{
+	background-color: #CCCCCC;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 80%;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
+	padding: 5px;
+}
+
+TD
+{
+	background-color: white;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 80%;
+	font-weight: normal;
+	text-align: left;
+	vertical-align: top;
+	padding: 5px;
+}
+
+
+TABLE
+{
+	border-collapse: collapse;
+	empty-cell: show;
+	page-break-inside:avoid
+}
+TABLE.layout1
+{
+	margin-bottom: 0.2cm;
+	width: 25.6cm;
+	table-layout: fixed;
+	font-size: 10pt;
+}
+P
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 80%;
+}
+@page querformat {
+	size: landscape;
+}
+div.karte {
+	page: querformat; page-break-before: always;
+}
+div.querformat {
+	page: querformat;
+}
+<!--Tabellenueberschrift wird bei Seitenumbruch uebernommen-->
+thead
+{
+	display: table-header-group
+}
+.num
+{
+	text-align:right;
+}
+form
+{ padding:0; border:0; }
+textarea
+{ font-size:13px; font-family:Verdana,sans-serif; font-weight:bold; color:#0000CC; }
+.Bereich
+{ background-color:#FFFFAA; width:25.6cm; border:6px solid #DDDDDD; }

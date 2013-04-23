@@ -1,0 +1,423 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MonteHelper\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-03 15:41+0100\n"
+"PO-Revision-Date: 2013-02-03 15:43+0100\n"
+"Last-Translator: Oliver Bienert <oliver.bienert@gmx.de>\n"
+"Language-Team: OB <oliver.bienert@gmx.de>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ../../../../\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SearchPath-0: montehelper\n"
+"X-Poedit-SearchPath-1: montehelper/config\n"
+
+#: montehelper/TextObjectValidator.py:45
+msgid "Please insert a value!"
+msgstr "Bitte gib einen Wert in dieses Feld ein!"
+
+#: montehelper/TextObjectValidator.py:50
+msgid "Please insert a name!"
+msgstr "Bitte gib einen gültigen Namen in dieses Feld ein!"
+
+#: montehelper/TextObjectValidator.py:55
+#: montehelper/TextObjectValidator.py:61
+msgid "Please insert a valid number!"
+msgstr "Bitte gib eine gültige Zahl in dieses Feld ein!"
+
+#: montehelper/TextObjectValidator.py:66
+msgid "Please insert a valid date"
+msgstr "Bitte gib ein gültiges Datum in dieses Feld ein!"
+
+#: montehelper/TextObjectValidator.py:71
+msgid "Please insert a date in the past"
+msgstr "Bitte gib ein Datum in der Vergangenheit an!"
+
+#: montehelper/TextObjectValidator.py:79
+msgid "Date of joining have to be older than date of separation!"
+msgstr "Austrittsdatum muss nach Eintrittsdatum liegen!"
+
+#: montehelper/EditAdultFrame.py:50
+msgid "Name, First name"
+msgstr "Name, Vorname"
+
+#: montehelper/EditAdultFrame.py:53
+msgid "Street, No."
+msgstr "Straße, Nr."
+
+#: montehelper/EditAdultFrame.py:56
+msgid "Postcode, city"
+msgstr "PLZ, Ort"
+
+#: montehelper/EditAdultFrame.py:59
+msgid "Staff"
+msgstr "Mitarbeiter"
+
+#: montehelper/EditAdultFrame.py:60
+msgid "Organization member"
+msgstr "Vereinsmitglied"
+
+#: montehelper/EditAdultFrame.py:61
+msgid "State"
+msgstr "Status"
+
+#: montehelper/EditAdultFrame.py:62
+msgid "Household size"
+msgstr "Personen im Haushalt"
+
+#: montehelper/EditAdultFrame.py:64
+msgid "Number"
+msgstr "Nummer"
+
+#: montehelper/EditAdultFrame.py:66
+#: montehelper/EditAdultFrame.py:82
+msgid "Type"
+msgstr "Art"
+
+#: montehelper/EditAdultFrame.py:68
+#: montehelper/EditAdultFrame.py:76
+#: montehelper/EditAdultFrame.py:84
+msgid "&New"
+msgstr "&Neu"
+
+#: montehelper/EditAdultFrame.py:69
+#: montehelper/EditAdultFrame.py:77
+#: montehelper/EditAdultFrame.py:85
+msgid "Delete"
+msgstr "Löschen"
+
+#: montehelper/EditAdultFrame.py:71
+msgid "Telephone"
+msgstr "Telefon"
+
+#: montehelper/EditAdultFrame.py:72
+msgid "Address"
+msgstr "Adresse"
+
+#: montehelper/EditAdultFrame.py:74
+msgid "Note"
+msgstr "Bemerkung"
+
+#: montehelper/EditAdultFrame.py:79
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: montehelper/EditAdultFrame.py:80
+#: montehelper/EditAdultFrame.py:87
+msgid "Income"
+msgstr "Einkommen"
+
+#: montehelper/EditAdultFrame.py:156
+msgid "Edit adult record"
+msgstr "Datensatz Erwachsener bearbeiten"
+
+#: montehelper/MainFrame.py:36
+msgid "&Preferences"
+msgstr "&Einstellungen"
+
+#: montehelper/MainFrame.py:36
+msgid "Program preferences"
+msgstr "Programmeinstellungen"
+
+#: montehelper/MainFrame.py:38
+msgid "&Quit\tCtrl-Q"
+msgstr "&Schließen\tStrg-Q"
+
+#: montehelper/MainFrame.py:38
+msgid "Exit program"
+msgstr "Programm beenden"
+
+#: montehelper/MainFrame.py:40
+msgid "&File"
+msgstr "&Datei"
+
+#: montehelper/MainFrame.py:42
+msgid "New &child"
+msgstr "Neues &Kind"
+
+#: montehelper/MainFrame.py:42
+msgid "Insert new child"
+msgstr "Neues Kind einfügen"
+
+#: montehelper/MainFrame.py:44
+msgid "&New adult"
+msgstr "&Neuer Erwachsener"
+
+#: montehelper/MainFrame.py:44
+msgid "Insert new adult"
+msgstr "Neuen Erwachsenen einfügen"
+
+#: montehelper/MainFrame.py:46
+msgid "&Calculate fee"
+msgstr "&Elternbeitrag berechnen"
+
+#: montehelper/MainFrame.py:46
+msgid "Calculate parent's fee"
+msgstr "Elternbeitrag berechnen"
+
+#: montehelper/MainFrame.py:48
+msgid "&Quarter announcement"
+msgstr "&Stichtagsmeldung"
+
+#: montehelper/MainFrame.py:48
+msgid "Create a quarter announcement"
+msgstr "Stichtagsmeldung erstellen"
+
+#: montehelper/MainFrame.py:50
+msgid "&Delete entry"
+msgstr "&Eintrag löschen"
+
+#: montehelper/MainFrame.py:50
+msgid "Delete entry for selected child or adult"
+msgstr "Eintrag für ausgewählten Datensatz löschen"
+
+#: montehelper/MainFrame.py:52
+msgid "&Edit"
+msgstr "&Bearbeiten"
+
+#: montehelper/MainFrame.py:54
+msgid "&Help"
+msgstr "&Hilfe"
+
+#: montehelper/MainFrame.py:108
+msgid "Monte-Helper"
+msgstr "Monte-Helfer"
+
+#: montehelper/MainFrame.py:126
+msgid "Adults"
+msgstr "Erwachsene"
+
+#: montehelper/MainFrame.py:127
+msgid "Children"
+msgstr "Kinder"
+
+#: montehelper/PreferencesDlg.py:27
+msgid "Database file"
+msgstr "Datenbankdatei"
+
+#: montehelper/PreferencesDlg.py:53
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: montehelper/ParentDialog.py:44
+msgid "Select"
+msgstr "Auswahl"
+
+#: montehelper/ListCtrlValidator.py:50
+msgid "Please fill table completely!"
+msgstr "Bitte Tabelle vollständig ausfüllen!"
+
+#: montehelper/ListCtrlValidator.py:58
+msgid "Please insert a valid income"
+msgstr "Bitte gib ein gültiges Einkommen an!"
+
+#: montehelper/ListCtrlValidator.py:65
+msgid "No valid time period!"
+msgstr "Kein gültiger Zeitraum!"
+
+#: montehelper/ListCtrlValidator.py:71
+msgid "Time period ends in the past!"
+msgstr "Zeitraum liegt in der Vergangenheit!"
+
+#: montehelper/EditChildFrame.py:47
+msgid "Name"
+msgstr "Name"
+
+#: montehelper/EditChildFrame.py:49
+msgid "Year (calculated)"
+msgstr "Klasse (berechnet)"
+
+#: montehelper/EditChildFrame.py:51
+msgid "Birth date"
+msgstr "Geburtsdatum"
+
+#: montehelper/EditChildFrame.py:53
+msgid "Date of joining"
+msgstr "Eintrittsdatum"
+
+#: montehelper/EditChildFrame.py:55
+msgid "First name"
+msgstr "Vorname"
+
+#: montehelper/EditChildFrame.py:57
+msgid "Year"
+msgstr "Klasse"
+
+#: montehelper/EditChildFrame.py:59
+msgid "Child benefit"
+msgstr "Kindergeld"
+
+#: montehelper/EditChildFrame.py:61
+msgid "Date of separation"
+msgstr "Austrittsdatum"
+
+#: montehelper/EditChildFrame.py:64
+msgid "Relationship"
+msgstr "Verhältnis"
+
+#: montehelper/EditChildFrame.py:66
+msgid "Calculation"
+msgstr "Berechnung"
+
+#: montehelper/EditChildFrame.py:67
+msgid "Liable to pay"
+msgstr "Zahlungspflichtig"
+
+#: montehelper/EditChildFrame.py:71
+msgid "Parents"
+msgstr "Eltern"
+
+#: montehelper/EditChildFrame.py:72
+msgid "Ruling"
+msgstr "Bescheid"
+
+#: montehelper/EditChildFrame.py:74
+msgid "Valid from"
+msgstr "Gültig ab"
+
+#: montehelper/EditChildFrame.py:76
+msgid "Valid to"
+msgstr "Gültig bis"
+
+#: montehelper/EditChildFrame.py:81
+msgid "Applications/Rulings"
+msgstr "Anträge/Bescheide"
+
+#: montehelper/EditChildFrame.py:152
+msgid "Edit child record"
+msgstr "Datensatz Kind bearbeiten"
+
+#: montehelper/CalcFeeDialog.py:29
+msgid "Ruling valid from"
+msgstr "Bescheid gültig ab"
+
+#: montehelper/CalcFeeDialog.py:31
+msgid "Receiver"
+msgstr "Empfänger"
+
+#: montehelper/CalcFeeDialog.py:33
+msgid "Underlying income"
+msgstr "Zugrunde liegendes Einkommen"
+
+#: montehelper/CalcFeeDialog.py:34
+msgid "Individual calculation"
+msgstr "Einzelberechnung"
+
+#: montehelper/CalcFeeDialog.py:35
+msgid "Notes"
+msgstr "Bemerkungen"
+
+#: montehelper/CalcFeeDialog.py:56
+msgid "Parent's fee"
+msgstr "Elternbeitrag"
+
+#: montehelper/config/src_strings.py:2
+msgid "Private"
+msgstr "Privat"
+
+#: montehelper/config/src_strings.py:3
+msgid "Business"
+msgstr "Dienstlich"
+
+#: montehelper/config/src_strings.py:4
+msgid "Mobile"
+msgstr "Mobil"
+
+#: montehelper/config/src_strings.py:5
+msgid "Mother"
+msgstr "Mutter"
+
+#: montehelper/config/src_strings.py:6
+msgid "Father"
+msgstr "Vater"
+
+#: montehelper/config/src_strings.py:7
+msgid "Grandmother"
+msgstr "Großmutter"
+
+#: montehelper/config/src_strings.py:8
+msgid "Grandfather"
+msgstr "Großvater"
+
+#: montehelper/config/src_strings.py:9
+#: montehelper/config/src_strings.py:19
+msgid "Other"
+msgstr "Andere"
+
+#: montehelper/config/src_strings.py:10
+msgid "Extended day time"
+msgstr "Erweiterte Betreuungszeit"
+
+#: montehelper/config/src_strings.py:11
+msgid "Extend care time"
+msgstr "Verlängerte Betreuungszeit"
+
+#: montehelper/config/src_strings.py:12
+msgid "Right to request and vote (available care service)"
+msgstr "Wunsch- und Wahlrecht"
+
+#: montehelper/config/src_strings.py:13
+msgid "Fee payment by county"
+msgstr "Übernahme von Gebühren durch Landkreis"
+
+#: montehelper/config/src_strings.py:14
+msgid "Lunch payment by county"
+msgstr "Übernahme von Essenkosten durch Landkreis"
+
+#: montehelper/config/src_strings.py:15
+msgid "Salary"
+msgstr "Nicht selbständig"
+
+#: montehelper/config/src_strings.py:17
+msgid "Unemployment"
+msgstr "Arbeitsamt"
+
+#: montehelper/config/src_strings.py:18
+msgid "Childsupport"
+msgstr "Unterhalt"
+
+#: montehelper/config/src_strings.py:20
+msgid "Less"
+msgstr "Abzüglich"
+
+#: montehelper/config/src_strings.py:21
+msgid "Kindergarten"
+msgstr "Kita"
+
+#: montehelper/config/src_strings.py:22
+msgid "1st year"
+msgstr "1. Klasse"
+
+#: montehelper/config/src_strings.py:23
+msgid "2nd year"
+msgstr "2. Klasse"
+
+#: montehelper/config/src_strings.py:24
+msgid "3rd year"
+msgstr "3. Klasse"
+
+#: montehelper/config/src_strings.py:25
+msgid "4th year"
+msgstr "4. Klasse"
+
+#: montehelper/config/src_strings.py:26
+msgid "5th year"
+msgstr "5. Klasse"
+
+#: montehelper/config/src_strings.py:27
+msgid "6th year"
+msgstr "6. Klasse"
+
+#~ msgid "Child support"
+#~ msgstr "Kindergeld"
+
+#~ msgid "Vorname"
+#~ msgstr "First name"
+
+#~ msgid "%s"
+#~ msgstr "%s"

@@ -87,7 +87,7 @@ class SqliteDB(Helpers):
         global reference date
         
         @param birthdate: Child's birthdate
-        @type birthdate: datetime
+        @type birthdate: isoformat datetime string
         @var referencedate: The reference date for a child to move to next year (grade)
         @type referencedate: datetime
         @return: Calculated year

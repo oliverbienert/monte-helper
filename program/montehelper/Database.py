@@ -562,13 +562,14 @@ class Database(SqliteDB, Helpers):
         '''
         Update tables addresses and adults_addresses as part of adult record.
         '''
+        # Make a string by joining address data
+        strfromdict = "".join("%s" % data[key].strip() for key in ('street','number','postcode','city'))
         # Check if there is an address registered for the given adult_id
         result = self.transact_query('checkaddress', (adult_id,))
         if (result.__len__() == True):
             address_id = result[0][0]
             # Check if the edited address differs from the old address
-            strfromdb = ",".join("%s" % tup for tup in result[0][1:])
-            strfromdict = ",".join("%s" % data[key] for key in ('street','number','postcode','city'))
+            strfromdb = "".join("%s" % tup.strip() for tup in result[0][1:])
             if (strfromdb.lower() == strfromdict.lower()):
                 # no need to change anything
                 return
@@ -577,8 +578,11 @@ class Database(SqliteDB, Helpers):
                 # Delete adult_id from adult_addresses
                 self.transact_query('deleteadults_addresses', (adult_id,))
         self.__cleanaddresses()
+        # Check if an address has been registered
+        if (len(strfromdict) == 0):
+            return 
         # Check if address exists
-        tu = tuple([data[key] for key in ('street','number','postcode','city')])
+        tu = tuple([data[key].strip() for key in ('street','number','postcode','city')])
         result = self.transact_query('compareaddresses', tu)
         if (result.__len__() == True):
             address_id = result[0][0]

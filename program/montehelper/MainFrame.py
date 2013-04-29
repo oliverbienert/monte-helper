@@ -156,6 +156,31 @@ class MainFrame(wx.Frame):
         self.Thaw()
         pub.sendMessage('main.checkdatabase') #@UndefinedVariable
     
+    def __getAdultFrame(self, frame):
+        if isinstance(frame, wx.Frame):
+            if not frame.Save():
+                frame.Raise()
+                return
+            frame.Raise()
+        else:
+            self.editadultframe = frame = EAF(self)
+            # Frame initialized. We need to fill comboboxes
+            pub.sendMessage('dialog.adult.created') #@UndefinedVariable
+        frame.Clear()
+        return frame
+        
+    def __getChildFrame(self, frame):
+        if isinstance(frame, wx.Frame):
+            if not frame.Save():
+                frame.Raise()
+                return
+            frame.Raise()
+        else:
+            self.editchildframe = frame = ECF(self)
+            # Frame initialized. We need to fill comboboxes
+            pub.sendMessage('dialog.child.created') #@UndefinedVariable
+        frame.Clear()
+        return frame
     def PopulateAdults(self, adults):
         self.adultsview.SetObjects(adults)
         
@@ -183,23 +208,13 @@ class MainFrame(wx.Frame):
             return
         adult_id = obj['adult_id']
         frame = self.editadultframe
-        if isinstance(frame, wx.Frame):
-            frame.Clear()
-            frame.Raise()
-        else:
-            self.editadultframe = frame = EAF(self)
-            # Frame initialized. We need to fill comboboxes
-            pub.sendMessage('dialog.adult.created') #@UndefinedVariable
+        frame = self.__getAdultFrame(frame)
         pub.sendMessage('dialog.adult.activated', arg1=adult_id) #@UndefinedVariable
         frame.Show()
         
     def OnAdultInsert(self, event): # wxGlade: MainFrame.<event_handler>
         frame = self.editadultframe
-        if isinstance(frame, wx.Frame):
-            frame.Clear()
-            frame.Raise()
-        else:
-            self.editadultframe = frame = EAF(self)
+        frame = self.__getAdultFrame(frame)
         frame.Show()
 
     def OnChildrenItemActivated(self, event):
@@ -209,30 +224,13 @@ class MainFrame(wx.Frame):
             return
         child_id = obj['child_id']
         frame = self.editchildframe
-        if isinstance(frame, wx.Frame):
-            if not frame.Save():
-                frame.Raise()
-                return
-            frame.Clear()
-            frame.Raise()
-        else:
-            self.editchildframe = frame = ECF(self)
-            # Frame initialized. We need to fill comboboxes
-            pub.sendMessage('dialog.child.created') #@UndefinedVariable
+        frame = self.__getChildFrame(frame)
         pub.sendMessage('dialog.child.activated', arg1=child_id) #@UndefinedVariable
-        frame.Iconize(False)
         frame.Show()
                 
     def OnChildInsert(self, event): # wxGlade: MainFrame.<event_handler>
         frame = self.editchildframe
-        if isinstance(frame, wx.Frame):
-            if not frame.Save():
-                frame.Raise()
-                return
-            frame.Clear()
-            frame.Raise()
-        else:
-            self.editchildframe = frame = ECF(self)
+        frame = self.__getChildFrame(frame)
         frame.Show()
 
     def OnCalcFee(self, event): # wxGlade: MainFrame.<event_handler>

@@ -40,16 +40,28 @@ class TextObjectValidator(wx.PyValidator, WxHelpers):
         textCtrl = self.GetWindow()
         value = textCtrl.GetValue()
         tcname = textCtrl.GetName()
+        addressCtrls = ('city', 'street', 'number', 'postcode')
+        checkAddressCtrls = False
         
-        if tcname in ('name', 'firstname', 'city', 'street', 'number', 'postcode') and len(value) == 0:
+        if tcname in ('name', 'firstname') and len(value) == 0:
             wx.MessageBox(_('Please insert a value!'), "Error")
             ret = False
-        elif tcname in ('name', 'firstname', 'city'):
+        elif tcname in addressCtrls:
+            # If any of the address fields have a value, all fields have to be set
+            # otherwise address will be ignored
+            address = "".join("%s" % win.FindWindowByName(key).GetValue().strip() for key in addressCtrls)
+            if len(address) != 0:
+                checkAddressCtrls = True
+                for key in addressCtrls:
+                    if  len(win.FindWindowByName(key).GetValue().strip()) == 0:
+                        wx.MessageBox(_('Please insert a value!'), "Error")
+                        ret = False
+        elif tcname in ('name', 'firstname') or tcname in ('city',) and checkAddressCtrls:
             match = self.validname.match(value)
             if not match:
                 wx.MessageBox(_('Please insert a name!'), "Error") 
                 ret = False
-        elif tcname in ('postcode',):
+        elif tcname in ('postcode',) and checkAddressCtrls:
             match = self.validpostcode.match(value)
             if not match:
                 wx.MessageBox(_('Please insert a valid number!'), "Error") 

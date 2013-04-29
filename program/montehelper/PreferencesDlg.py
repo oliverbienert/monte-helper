@@ -6,6 +6,7 @@ import wx
 from wx.lib.pubsub import setupkwargs #@UnusedImport
 from wx.lib.pubsub import pub
 import Images
+from collections import defaultdict
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -42,7 +43,7 @@ class PreferencesDlg(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.OnDBfile, self.b_dbfile)
         self.__do_layout_nowxglade()
 
-        self.obj = None
+        self.obj = defaultdict()
 
         # Register PubSub Listener
         pub.subscribe(self.Populate, 'dialog.preferences.populate') #@UndefinedVariable

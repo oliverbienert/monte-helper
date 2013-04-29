@@ -316,14 +316,14 @@ class EditAdultFrame(wx.Frame, WxHelpers, Helpers):
     def Clear(self):
         self._clearing = True
         # The object holding the data of this dialog
-        data = {'name': '',
+        self.obj = {'name': '',
                 'firstname': '',
                 'street': '',
                 'number': '',
                 'postcode': '',
                 'city': '',
                 'householdsize': ''}
-        self.Populate(data)
+        self.Populate(self.obj)
         self.staff.SetValue(False)
         self.organization.SetValue(False)
         self.fonnumber.Clear()
@@ -332,7 +332,6 @@ class EditAdultFrame(wx.Frame, WxHelpers, Helpers):
         self.emailnote.Clear()
         self.income.Clear()
         self.set_cb_value(self.incometype, '')
-        self.obj = None
         self.positions = None
         self.fonnumberobject = None
         self.emails = None

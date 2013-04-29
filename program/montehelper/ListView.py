@@ -33,6 +33,7 @@ class ListView(wx.ListCtrl, listmix.ColumnSorterMixin, listmix.ListCtrlAutoWidth
         # ALternate colors
         self.evenRowsBackColor = wx.Colour(240, 248, 255) # ALICE BLUE
         self.oddRowsBackColor = wx.Colour(255, 250, 205) # LEMON CHIFFON
+        listmix.ListRowHighlighter.__init__(self)
         # Helper methods
         Helpers.__init__(self)
         # Bind for sorting

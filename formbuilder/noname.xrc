@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<resource xmlns="http://www.wxwindows.org/wxxrc" version="2.3.0.1">
+	<object class="wxFrame" name="MainFrame">
+		<style>wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL</style>
+		<size>500,300</size>
+		<title>Monte-Helper</title>
+		<object class="wxMenuBar" name="m_menubar2">
+			<label>MyMenuBar</label>
+			<object class="wxMenu" name="m_menu4">
+				<label>File</label>
+			</object>
+			<object class="wxMenu" name="m_menu5">
+				<label>Edit</label>
+			</object>
+		</object>
+		<object class="wxStatusBar" name="m_statusBar2">
+			<style>wxST_SIZEGRIP</style>
+			<fields>1</fields>
+		</object>
+		<object class="ListView" name="m_customControl2" />
+	</object>
+</resource>

@@ -1,6 +1,15 @@
-select distinct a.people_id adult_id, a.name, a.firstname, ad.address_id, ad.street, ad.number, ad.postcode, ad.city, h.size householdsize
-from people a
-left join adults_addresses aa on a.people_id = aa.adult_id
-left join addresses ad on aa.address_id = ad.address_id
-left join householdsize h on a.people_id = h.adult_id
-where a.people_id = ?
+SELECT DISTINCT
+  a.people_id   adult_id,
+  a.name        name,
+  a.firstname   firstname,
+  ad.address_id address_id,
+  ad.street     street,
+  ad.number     number,
+  ad.postcode   postcode,
+  ad.city       city,
+  h.size        householdsize
+FROM people a
+  LEFT JOIN adults_addresses aa ON a.people_id = aa.adult_id
+  LEFT JOIN addresses ad ON aa.address_id = ad.address_id
+  LEFT JOIN householdsize h ON a.people_id = h.adult_id
+WHERE a.people_id = ?

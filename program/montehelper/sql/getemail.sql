@@ -1,5 +1,8 @@
-select e.email_id, e.email, ae.note
-from people as a
-inner join adults_emailaddresses as ae on a.people_id = ae.adult_id
-inner join emailaddresses as e on ae.email_id = e.email_id
-where a.people_id = ?
+SELECT
+  e.email_id email_id,
+  e.email    email,
+  ae.note    note
+FROM people a
+  INNER JOIN adults_emailaddresses ae ON a.people_id = ae.adult_id
+  INNER JOIN emailaddresses e ON ae.email_id = e.email_id
+WHERE a.people_id = ?

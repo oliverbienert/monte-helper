@@ -1,15 +1,26 @@
-select distinct c.people_id child_id, c.name, c.firstname, b.birthdate,
- ry.year_id year, cb.benefit, calcyear(birthdate) yearcalculated, ly.description yc_description,
- j.date joindate, s.date separationdate
-from people c
-inner join birthdate b on c.people_id = b.child_id
-left join l_year ly on yearcalculated = ly.year_id
-left join (
-    select r.child_id, r.year_id, l.description
-    from realyear r
-    inner join l_year l on r.year_id = l.year_id
-) ry on c.people_id = ry.child_id
-left join childbenefit cb on c.people_id = cb.child_id
-left join joindates j on (c.people_id = j.people_id and j.type_id = 'school')
-left join separationdates s on (c.people_id = s.people_id and s.type_id = 'school')
-where c.people_id = ?
+SELECT DISTINCT
+  c.people_id         child_id,
+  c.name              name,
+  c.firstname         firstname,
+  b.birthdate         birthdate,
+  ry.year_id          year,
+  cb.benefit          benefit,
+  calcyear(birthdate) yearcalculated,
+  ly.description      yc_description,
+  j.date              joindate,
+  s.date              separationdate
+FROM people c
+  INNER JOIN birthdate b ON c.people_id = b.child_id
+  LEFT JOIN l_year ly ON yearcalculated = ly.year_id
+  LEFT JOIN (
+              SELECT
+                r.child_id,
+                r.year_id,
+                l.description
+              FROM realyear r
+                INNER JOIN l_year l ON r.year_id = l.year_id
+            ) ry ON c.people_id = ry.child_id
+  LEFT JOIN childbenefit cb ON c.people_id = cb.child_id
+  LEFT JOIN joindates j ON (c.people_id = j.people_id AND j.type_id = 'school')
+  LEFT JOIN separationdates s ON (c.people_id = s.people_id AND s.type_id = 'school')
+WHERE c.people_id = ?

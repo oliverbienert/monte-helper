@@ -1,4 +1,7 @@
-select i.income, i.incometype_id, l.description
-from income i
-inner join l_incometypes l on i.incometype_id = l.incometype_id
-where adult_id = ?
+SELECT
+  i.income        income,
+  i.incometype_id incometype_id,
+  l.description   description
+FROM income i
+  INNER JOIN l_incometypes l ON i.incometype_id = l.incometype_id
+WHERE adult_id = ?

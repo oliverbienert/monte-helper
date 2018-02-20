@@ -1,4 +1,9 @@
-select a.address_id, street, number, postcode, city
-from adults_addresses aa
-inner join addresses a on aa.address_id = a.address_id
-and adult_id = ?
+SELECT
+  a.address_id address_id,
+  street,
+  number,
+  postcode,
+  city
+FROM adults_addresses aa
+  INNER JOIN addresses a ON aa.address_id = a.address_id
+                            AND adult_id = ?

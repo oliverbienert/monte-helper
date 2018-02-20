@@ -1,4 +1,8 @@
-select r.ruling_id, l.description, r.startdate, r.enddate
-from rulings r 
-inner join l_rulings l on r.ruling_id = l.ruling_id
-where child_id = ?
+SELECT
+  r.ruling_id   ruling_id,
+  l.description description,
+  r.startdate   startdate,
+  r.enddate     enddate
+FROM rulings r
+  INNER JOIN l_rulings l ON r.ruling_id = l.ruling_id
+WHERE child_id = ?

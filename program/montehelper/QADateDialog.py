@@ -3,8 +3,9 @@
 
 import wx
 from WxHelpers import WxHelpers
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs #@UnusedImport
+from pubsub import pub
+from wx import adv
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -24,7 +25,7 @@ class QADateDialog(wx.Dialog, WxHelpers):
         wx.Dialog.__init__(self, *args, **kwds)
         self.panel_4 = wx.Panel(self, -1)
         self.l_qadate = wx.StaticText(self.panel_4, -1, _("Please select a valid quarter announcement date!"))
-        self.qadate = wx.DatePickerCtrl(self.panel_4, -1)
+        self.qadate = adv.DatePickerCtrl(self.panel_4, -1)
         self.b_ok = wx.Button(self.panel_4, wx.ID_OK, "")
         self.b_cancel = wx.Button(self.panel_4, wx.ID_CANCEL, "")
 

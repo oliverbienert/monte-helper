@@ -25,7 +25,7 @@ class WxHelpers(object):
         assert isinstance(date, (datetime, date))
         tt = date.timetuple()
         dmy = (tt[2], tt[1]-1, tt[0])
-        wxdate = wx.DateTimeFromDMY(*dmy)
+        wxdate = wx.DateTime.FromDMY(*dmy)
         return wxdate
     
     def wxdate2pydate(self, date):

@@ -25,7 +25,7 @@ class ListCtrlValidator(wx.PyValidator, Helpers):
         Constructor
         '''
         Helpers.__init__(self)
-        wx.PyValidator.__init__(self)
+        wx.Validator.__init__(self)
         
     def Clone(self):
         """ Standard cloner.

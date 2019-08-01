@@ -199,7 +199,7 @@ class ListView(wx.ListCtrl, listmix.ColumnSorterMixin, listmix.ListCtrlAutoWidth
         try:
             self.__unselectLines()
             self.SetItemState (item_id, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-        except (Exception), e:
+        except (Exception) as e:
             logger.error('Error while trying to highlight listctrl item: %s' % e)
 
     def __clear(self):
@@ -248,7 +248,7 @@ class ListView(wx.ListCtrl, listmix.ColumnSorterMixin, listmix.ListCtrlAutoWidth
         else:
             if val == None:
                 val = ''
-            self.SetStringItem(index, col, _(val))
+            self.SetItem(index, col, _(val))
 
     def __getSelectedIndices(self, state =  wx.LIST_STATE_SELECTED):
         '''
@@ -316,15 +316,15 @@ class ListView(wx.ListCtrl, listmix.ColumnSorterMixin, listmix.ListCtrlAutoWidth
         Insert a new item (row) in the listview
         '''
         # Insert a row and set column 0 with the dummie value
-        self.InsertStringItem(index, values[0])
+        self.InsertItem(index, values[0])
         # Now insert values of remaining columns
         col = 1
         for val in values[1:]:
             try:
                 self.__updatecol(index, col, val)
-            except (AttributeError, TypeError, ValueError), ex:
-                print ex
-                # TODO: Log error    
+            except (AttributeError, TypeError, ValueError) as ex:
+                print(ex)
+                # TODO: Log error
             col += 1
         self.__setbgcolor(index)
         self.SetItemData(index, index)
@@ -337,9 +337,9 @@ class ListView(wx.ListCtrl, listmix.ColumnSorterMixin, listmix.ListCtrlAutoWidth
         for val in values:
             try:
                 self.__updatecol(index, col, val)
-            except (AttributeError, TypeError, ValueError), ex:
-                print ex
-                # TODO: Log error    
+            except (AttributeError, TypeError, ValueError) as ex:
+                print(ex)
+                # TODO: Log error
             col += 1
         self.__setbgcolor(index)
         self.SetItemData(index, index)

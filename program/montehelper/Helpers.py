@@ -78,7 +78,7 @@ class Helpers(object):
         @param val: Value to be searched for.  
         @return: Key found  
         '''
-        return [k for k, v in dct.iteritems() if v == val][0]
+        return [k for k, v in dct.items() if v == val][0]
     
     def converttoint(self, val):
         '''

@@ -3,8 +3,9 @@
 
 import wx #@UnusedImport
 import wx.lib.agw.persist as PM
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs #@UnusedImport
+from pubsub import pub
+from wx import adv
 from datetime import datetime
 import Images
 from ParentDialog import ParentDialog as ParDlg
@@ -50,19 +51,19 @@ class EditChildFrame(wx.Frame, WxHelpers):
         self.l_firstname = wx.StaticText(self.panel_1, -1, _("First name"))
         self.firstname = wx.TextCtrl(self.panel_1, ID_FN, "")
         self.l_registrationdate = wx.StaticText(self.panel_1, -1, _("Registration date"))
-        self.registrationdate = wx.DatePickerCtrl(self.panel_1, ID_RD, style=wx.DP_ALLOWNONE)
+        self.registrationdate = adv.DatePickerCtrl(self.panel_1, ID_RD, style=adv.DP_ALLOWNONE)
         self.l_birthdate = wx.StaticText(self.panel_1, -1, _("Birth date"))
-        self.birthdate = wx.DatePickerCtrl(self.panel_1, ID_BI, style=wx.DP_ALLOWNONE)
+        self.birthdate = adv.DatePickerCtrl(self.panel_1, ID_BI, style=adv.DP_ALLOWNONE)
         self.l_benefit = wx.StaticText(self.panel_1, -1, _("Child benefit"))
         self.benefit = wx.TextCtrl(self.panel_1, ID_CB, "")
         self.l_joindate = wx.StaticText(self.panel_1, -1, _("Date of joining"))
-        self.joindate = wx.DatePickerCtrl(self.panel_1, ID_DJ, style=wx.DP_ALLOWNONE)
+        self.joindate = adv.DatePickerCtrl(self.panel_1, ID_DJ, style=adv.DP_ALLOWNONE)
         self.l_year = wx.StaticText(self.panel_1, -1, _("Year"))
         self.year = wx.ComboBox(self.panel_1, ID_YE, choices=[], style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
         self.l_yearcalculated = wx.StaticText(self.panel_1, -1, _("Year (calculated)"))
         self.yc_description = wx.TextCtrl(self.panel_1, -1, "", style=wx.TE_READONLY)
         self.l_separationdate = wx.StaticText(self.panel_1, -1, _("Date of separation"))
-        self.separationdate = wx.DatePickerCtrl(self.panel_1, ID_DS, style=wx.DP_ALLOWNONE)
+        self.separationdate = adv.DatePickerCtrl(self.panel_1, ID_DS, style=adv.DP_ALLOWNONE)
         self.parent = wx.TextCtrl(self.panel_1, -1, "", style=wx.TE_READONLY)
         self.l_relation = wx.StaticText(self.panel_1, -1, _("Relationship"))
         self.relation = wx.ComboBox(self.panel_1, ID_RE, choices=[], style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
@@ -75,9 +76,9 @@ class EditChildFrame(wx.Frame, WxHelpers):
         self.l_rulings = wx.StaticText(self.panel_1, -1, _("Ruling"))
         self.ruling = wx.ComboBox(self.panel_1, ID_CB2, choices=[], style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
         self.l_startdate = wx.StaticText(self.panel_1, -1, _("Valid from"))
-        self.startdate = wx.DatePickerCtrl(self.panel_1, ID_DP2, style=wx.DP_ALLOWNONE)
+        self.startdate = adv.DatePickerCtrl(self.panel_1, ID_DP2, style=adv.DP_ALLOWNONE)
         self.l_enddate = wx.StaticText(self.panel_1, -1, _("Valid to"))
-        self.enddate = wx.DatePickerCtrl(self.panel_1, ID_DP3, style=wx.DP_ALLOWNONE)
+        self.enddate = adv.DatePickerCtrl(self.panel_1, ID_DP3, style=adv.DP_ALLOWNONE)
         self.button_5 = wx.Button(self.panel_1, -1, _("&New"))
         self.b_deleteruling = wx.Button(self.panel_1, -1, _("Delete"))
         self.lv_rulings = ListView(self.panel_1, -1)
@@ -91,20 +92,20 @@ class EditChildFrame(wx.Frame, WxHelpers):
 
         self.Bind(wx.EVT_TEXT, self.OnChanged, id=ID_NA)
         self.Bind(wx.EVT_TEXT, self.OnChanged, id=ID_FN)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnChanged, id=ID_RD)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnChanged, id=ID_BI)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnChanged, id=ID_RD)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnChanged, id=ID_BI)
         self.Bind(wx.EVT_TEXT, self.OnChanged, id=ID_CB)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnChanged, id=ID_DJ)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnChanged, id=ID_DJ)
         self.Bind(wx.EVT_COMBOBOX, self.OnChanged, id=ID_YE)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnChanged, id=ID_DS)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnChanged, id=ID_DS)
         self.Bind(wx.EVT_COMBOBOX, self.OnRefresh, id=ID_RE)
         self.Bind(wx.EVT_CHECKBOX, self.OnRefresh, id=ID_CHB1)
         self.Bind(wx.EVT_CHECKBOX, self.OnRefresh, id=ID_CHB2)
         self.Bind(wx.EVT_BUTTON, self.OnNew, self.button_2)
         self.Bind(wx.EVT_BUTTON, self.OnDelete, self.b_delete)
         self.Bind(wx.EVT_COMBOBOX, self.OnRefreshRuling, id=ID_CB2)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnRefreshRuling, id=ID_DP2)
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnRefreshRuling, id=ID_DP3)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnRefreshRuling, id=ID_DP2)
+        self.Bind(adv.EVT_DATE_CHANGED, self.OnRefreshRuling, id=ID_DP3)
         self.Bind(wx.EVT_BUTTON, self.OnNewRuling, self.button_5)
         self.Bind(wx.EVT_BUTTON, self.OnDeleteRuling, self.b_deleteruling)
         self.Bind(wx.EVT_BUTTON, self.OnOK, self.btn_OK)
@@ -325,7 +326,11 @@ class EditChildFrame(wx.Frame, WxHelpers):
                 self.SendData()
         return ret
             
-    def Populate(self, data, parents=[], rulings=[]):
+    def Populate(self, data, parents=None, rulings=None):
+        if rulings is None:
+            rulings = []
+        if parents is None:
+            parents = []
         self.obj = data
         for k, v in data.items():
             try:
@@ -518,7 +523,7 @@ class EditChildFrame(wx.Frame, WxHelpers):
             # itemObject is a dictionary with keys label and id
             dct = self.get_cb_value(self.year)
             self.obj['year'] = dct['id']
-        elif (event_id == ID_BI):
+        elif event_id == ID_BI:
             self.obj['birthdate'] = self.wxdate2pydate(self.birthdate.GetValue())
         elif (event_id == ID_DJ):
             self.obj['joindate'] = self.wxdate2pydate(self.joindate.GetValue())

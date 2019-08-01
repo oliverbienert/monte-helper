@@ -13,26 +13,27 @@ from datetime import datetime
 # Make a shorter alias
 _ = wx.GetTranslation
 
+
 class TextObjectValidator(wx.PyValidator, WxHelpers):
     """ This validator is used to ensure that the user has entered something
         into the text object editor dialog's text field.
     """
+
     def __init__(self):
         """ Standard constructor.
         """
         WxHelpers.__init__(self)
-        wx.PyValidator.__init__(self)
+        wx.Validator.__init__(self)
         self.validname = re.compile(r'^((?!\d|_)\w)+$', re.U)
         self.validpostcode = re.compile(r'^\d{5}$')
-    
+
     def Clone(self):
         """ Standard cloner.
     
             Note that every validator must implement the Clone() method.
         """
         return TextObjectValidator()
-    
-    
+
     def Validate(self, win):
         """ Validate the contents of the given text control.
         """
@@ -42,7 +43,7 @@ class TextObjectValidator(wx.PyValidator, WxHelpers):
         tcname = textCtrl.GetName()
         addressCtrls = ('city', 'street', 'number', 'postcode')
         checkAddressCtrls = False
-        
+
         if tcname in ('name', 'firstname') and len(value) == 0:
             wx.MessageBox(_('Please insert a value!'), "Error")
             ret = False
@@ -53,24 +54,24 @@ class TextObjectValidator(wx.PyValidator, WxHelpers):
             if len(address) != 0:
                 checkAddressCtrls = True
                 for key in addressCtrls:
-                    if  len(win.FindWindowByName(key).GetValue().strip()) == 0:
+                    if len(win.FindWindowByName(key).GetValue().strip()) == 0:
                         wx.MessageBox(_('Please insert a value!'), "Error")
                         ret = False
         elif tcname in ('name', 'firstname') or tcname in ('city',) and checkAddressCtrls:
             match = self.validname.match(value)
             if not match:
-                wx.MessageBox(_('Please insert a name!'), "Error") 
+                wx.MessageBox(_('Please insert a name!'), "Error")
                 ret = False
         elif tcname in ('postcode',) and checkAddressCtrls:
             match = self.validpostcode.match(value)
             if not match:
-                wx.MessageBox(_('Please insert a valid number!'), "Error") 
+                wx.MessageBox(_('Please insert a valid number!'), "Error")
                 ret = False
         elif tcname in ('benefit', 'householdsize') and len(value) > 0:
             try:
                 value = int(value)
             except (ValueError, TypeError):
-                wx.MessageBox(_('Please insert a valid number!'), "Error") 
+                wx.MessageBox(_('Please insert a valid number!'), "Error")
                 ret = False
         elif tcname in ('birthdate',):
             value = self.wxdate2pydate(value)
@@ -101,25 +102,24 @@ class TextObjectValidator(wx.PyValidator, WxHelpers):
             textCtrl.SetFocus()
             textCtrl.Refresh()
         else:
-            textCtrl.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW))
+            textCtrl.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
             textCtrl.Refresh()
         return ret
-    
+
     def TransferToWindow(self):
         """ Transfer data from validator to window.
     
             The default implementation returns False, indicating that an error
             occurred.  We simply return True, as we don't do any data transfer.
         """
-        return True # Prevent wxDialog from complaining.
-    
-    
+        return True  # Prevent wxDialog from complaining.
+
     def TransferFromWindow(self):
         """ Transfer data from window to validator.
     
             The default implementation returns False, indicating that an error
             occurred.  We simply return True, as we don't do any data transfer.
         """
-        return True # Prevent wxDialog from complaining.
-    
-#----------------------------------------------------------------------
+        return True  # Prevent wxDialog from complaining.
+
+# ----------------------------------------------------------------------

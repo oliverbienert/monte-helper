@@ -8,8 +8,8 @@ import os
 import sys
 import logging
 from Database import Database
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs #@UnusedImport
+from pubsub import pub
 from Calcfee import CalcFee
 from Report import Report
 from Preferences import Preferences

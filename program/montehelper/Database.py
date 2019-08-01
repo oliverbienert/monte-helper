@@ -18,6 +18,7 @@ import logging
 # Logger
 logger = logging.getLogger('montehelper.%s' % __name__)
 
+
 class Database(SqliteDB, Helpers):
     '''
     Each public method returns either a result set of a database query
@@ -29,7 +30,7 @@ class Database(SqliteDB, Helpers):
         Constructor
         '''
         super(Database, self).__init__()
-        
+
     def updatedb(self, version):
         '''
         Check and update database if necessary
@@ -54,16 +55,14 @@ class Database(SqliteDB, Helpers):
                     logger.info('Update %i called' % dbversion)
                 dbversion += 1
             self.transact_commit()
-        except Exception, e:
+        except Exception as e:
             ret = False
-            print "Writing to database failed:", e
+            print("updatedb: Writing to database failed:", e)
             self.transact_rollback()
         finally:
             self.transact_close()
         return ret
-        
-    
-        
+
     def getadults(self):
         '''
         Get all adult records from the database and join with fon numbers.
@@ -82,15 +81,15 @@ class Database(SqliteDB, Helpers):
             fonnumbertype_id = item['fonnumbertype_id']
             number = item['number']
             # Test if we have already an entry for this adult_id
-            if dct.has_key(adult_id) == False:
+            if adult_id not in dct:
                 # Init a new dict entry using key adult_id
-                dct[adult_id] = {'adult_id':adult_id,'name':item['name'],'firstname':item['firstname']}
+                dct[adult_id] = {'adult_id': adult_id, 'name': item['name'], 'firstname': item['firstname']}
             # We use the first found entry for a fon type only:
             # If the subdict has the appropriate key already, then don't insert again
-            if fonnumbertype_id and dct[adult_id].has_key(fonnumbertype_id) == False:
+            if fonnumbertype_id and fonnumbertype_id not in dct[adult_id]:
                 dct[adult_id][fonnumbertype_id] = number
         return dct.values()
-    
+
     def getchildren(self):
         '''
         Get children records to be put into main frame.
@@ -121,7 +120,7 @@ class Database(SqliteDB, Helpers):
             del d['year_id']
             lst.append(d)
         return lst
-    
+
     def gettable(self, tablename, getdict=True):
         '''
         Get all records from specified table
@@ -137,7 +136,7 @@ class Database(SqliteDB, Helpers):
         else:
             lst = self.result[:]
         return lst
-    
+
     def getadult(self, adult_id):
         '''
         Get the names and address data for given adult_id.
@@ -151,7 +150,7 @@ class Database(SqliteDB, Helpers):
         self.connect('getadult', (adult_id,))
         # Get first row of result set and cast to dict
         return dict(self.result[0])
-    
+
     def getfonnumbers(self, adult_id):
         '''
         Get fon numbers for the given adult_id.
@@ -186,7 +185,7 @@ class Database(SqliteDB, Helpers):
             d = dict(item)
             lst.append(d)
         return lst
-    
+
     def getincome(self, adult_id):
         '''
         Get all income records for specified id.
@@ -203,7 +202,7 @@ class Database(SqliteDB, Helpers):
             d = dict(item)
             lst.append(d)
         return lst
-    
+
     def getpositions(self, adult_id):
         '''
         Get all positions for specified id.
@@ -215,7 +214,7 @@ class Database(SqliteDB, Helpers):
         '''
         self.connect('getpositions', (adult_id,), return_as_dict=False)
         return self.result[:]
-    
+
     def getchild(self, child_id):
         '''
         Get the record for specified child_id.
@@ -237,11 +236,11 @@ class Database(SqliteDB, Helpers):
         try:
             realyear = int(result['year'])
             # Adjust with the difference stored in realyear
-            result['year'] = result['yearcalculated'] - realyear 
+            result['year'] = result['yearcalculated'] - realyear
         except (ValueError, TypeError):
             pass
         return result
-    
+
     def getparents(self, child_id):
         '''
         Get the parents for the specified child_id
@@ -264,7 +263,7 @@ class Database(SqliteDB, Helpers):
             del d['flags']
             lst.append(d)
         return lst
-    
+
     def getrulings(self, child_id):
         '''
         Get rulings for this child_id.
@@ -285,7 +284,7 @@ class Database(SqliteDB, Helpers):
             d['enddate'] = parse(d['enddate'])
             lst.append(d)
         return lst
-    
+
     def getadults_for_calcfee(self, adult_id):
         '''
         Get adults and their incomes for calculation of parent's fee
@@ -305,7 +304,7 @@ class Database(SqliteDB, Helpers):
             d = dict(item)
             lst.append(d)
         return lst
-    
+
     def getchildren_for_calcfee(self, adult_id, date):
         '''
         Return all children to be included in the calculation, ordered by birthdate
@@ -334,7 +333,7 @@ class Database(SqliteDB, Helpers):
             d['year_id'] = year_id
             lst.append(d)
         return lst
-    
+
     def getchildren_for_quarterannouncement(self, date):
         '''
         Return all children to be included in quarter announcement,
@@ -361,7 +360,6 @@ class Database(SqliteDB, Helpers):
             d['year_id'] = year_id
             lst.append(d)
         return lst
-            
 
     def getaddress(self, adult_id):
         '''
@@ -375,7 +373,7 @@ class Database(SqliteDB, Helpers):
         self.connect('getaddress', (adult_id,))
         # Cast sqlite3.Row to dictionary
         return dict(self.result[0])
-    
+
     def getfees_lookup(self):
         '''
         Returns the l_fees table
@@ -388,26 +386,26 @@ class Database(SqliteDB, Helpers):
         return self.result[:]
 
     def getlookup(self, query_key):
-        '''
+        """
         Get all values from a lookup table
-        
+
         @param query_key: Table name
         @type query_key: String
         @return: Dictionary using the value of the id column as key and
             the value of the description column as value
         @rtype: Dictionary
-        '''
+        """
         dct = {}
         query = """select * from %s""" % (query_key,)
         self.connect(query, return_as_dict=False)
         for item in self.result:
             dct[item[0]] = item[1]
         return dct
-  
+
     def setadult(self, data, positions, fonnumbers, email, income):
-        '''
+        """
         Write an adult record back to database or insert a new one.
-        
+
         @param data: Dict with fields for table adults to be updated
         @type data: Dictionary
         @param positions: List of position keywords
@@ -417,12 +415,12 @@ class Database(SqliteDB, Helpers):
         @param email: List of email-addresses
         @type email: list
         @param income: List of incomes and thei respective type
-        @type income: list       
-        '''
+        @type income: list
+        """
         ret = True
         try:
             self.transact_start()
-            if data.has_key('adult_id'):
+            if 'adult_id' in data:
                 # Update existing record.
                 adult_id = data['adult_id']
                 self.__updateadult(data)
@@ -436,18 +434,18 @@ class Database(SqliteDB, Helpers):
             self.__updateemail(adult_id, email)
             self.__updateincome(adult_id, income)
             self.transact_commit()
-        except Exception, e:
+        except Exception as e:
             ret = False
-            print "Writing to database failed:", e
+            print("Writing to database failed:", e)
             self.transact_rollback()
         finally:
             self.transact_close()
         return ret
-        
+
     def deleteadult(self, adult_id):
-        '''
+        """
         Delete an adult record.
-        '''
+        """
         ret = True
         try:
             self.transact_start()
@@ -456,19 +454,19 @@ class Database(SqliteDB, Helpers):
             self.__cleanemailaddresses()
             self.__cleanfonnumbers()
             self.transact_commit()
-        except Exception, e:
+        except Exception as e:
             ret = False
-            print "Writing to database failed:", e
+            print("Writing to database failed:", e)
             self.transact_rollback()
         finally:
             self.transact_close()
         return ret
-    
+
     def setchild(self, data, parents, rulings):
         ret = True
         try:
             self.transact_start()
-            if data.has_key('child_id'):
+            if 'child_id' in data:
                 child_id = data['child_id']
                 self.__updatechild(data)
             else:
@@ -476,56 +474,56 @@ class Database(SqliteDB, Helpers):
                 child_id = self.__insertchild(data)
             self.__updatebirthdate(child_id, data)
             self.__updatechildbenefit(child_id, data)
-            self.__updaterealyear(child_id,data)
-            self.__updatejoindate(child_id,data['joindate'], 'school')
+            self.__updaterealyear(child_id, data)
+            self.__updatejoindate(child_id, data['joindate'], 'school')
             self.__updateseparationdate(child_id, data['separationdate'], 'school')
             self.__updateparents(child_id, parents)
             self.__updaterulings(child_id, rulings)
             self.transact_commit()
-        except Exception, e:
+        except Exception as e:
             ret = False
-            print "Writing to database failed:", e
+            print("Writing to database failed:", e)
             self.transact_rollback()
         finally:
             self.transact_close()
         return ret
-            
+
     def deletechild(self, child_id):
-        '''
+        """
         Delete a child record.
-        '''
+        """
         ret = True
         try:
             self.transact_start()
             self.transact_query('deletepeople', (child_id,))
             self.transact_commit()
-        except Exception, e:
+        except Exception as e:
             ret = False
-            print "Writing to database failed:", e
+            print("Writing to database failed:", e)
             self.transact_rollback()
         finally:
             self.transact_close()
         return ret
-    
+
     def __initversion(self):
-        '''
+        """
         Initialize version control for database
-        '''
+        """
         # Create version table if it doesn't exist
         self.transact_query('createversion')
         # Ask for version
-        self.transact_query('getversion')
+        self.connect('getversion')
         if not len(self.result):
             # Table just created, set version to 0
             # and insert version record.
             dbversion = 0
-            self.transact_query('initversion') 
+            self.transact_query('initversion')
         else:
             # Get database version
             dct = dict(self.result[0])
             dbversion = dct['build']
         return dbversion
-    
+
     def __update0(self):
         self.transact_query('registrationdate')
         self.transact_query('updateversion', (1,))
@@ -535,7 +533,7 @@ class Database(SqliteDB, Helpers):
         Update the adults table part of an adult record.
         '''
         self.transact_query('updatepeople', (data['name'], data['firstname'], data['adult_id']))
-    
+
     def __insertadult(self, data):
         '''
         Insert a new row in the adults table and return
@@ -544,7 +542,7 @@ class Database(SqliteDB, Helpers):
         self.transact_query('insertpeople', (data['name'], data['firstname'], 'adult'))
         adult_id = self.lrid
         return adult_id
-    
+
     def __updatehouseholdsize(self, adult_id, data):
         '''
         Update table householdsize as part of adult record.
@@ -556,21 +554,20 @@ class Database(SqliteDB, Helpers):
         except (ValueError, TypeError):
             return
         self.transact_query('inserthouseholdsize', (adult_id, householdsize))
-        
-    
+
     def __updateaddresses(self, adult_id, data):
         '''
         Update tables addresses and adults_addresses as part of adult record.
         '''
         # Make a string by joining address data
-        strfromdict = "".join("%s" % data[key].strip() for key in ('street','number','postcode','city'))
+        strfromdict = "".join("%s" % data[key].strip() for key in ('street', 'number', 'postcode', 'city'))
         # Check if there is an address registered for the given adult_id
-        result = self.transact_query('checkaddress', (adult_id,))
-        if (result.__len__() == True):
-            address_id = result[0][0]
+        self.transact_query('checkaddress', (adult_id,))
+        if self.result.__len__():
+            address_id = self.result[0][0]
             # Check if the edited address differs from the old address
-            strfromdb = "".join("%s" % tup.strip() for tup in result[0][1:])
-            if (strfromdb.lower() == strfromdict.lower()):
+            strfromdb = "".join("%s" % tup.strip() for tup in self.result[0][1:])
+            if strfromdb.lower() == strfromdict.lower():
                 # no need to change anything
                 return
             else:
@@ -580,19 +577,19 @@ class Database(SqliteDB, Helpers):
         self.__cleanaddresses()
         # Check if an address has been registered
         if (len(strfromdict) == 0):
-            return 
-        # Check if address exists
-        tu = tuple([data[key].strip() for key in ('street','number','postcode','city')])
-        result = self.transact_query('compareaddresses', tu)
-        if (result.__len__() == True):
-            address_id = result[0][0]
+            return
+            # Check if address exists
+        tu = tuple([data[key].strip() for key in ('street', 'number', 'postcode', 'city')])
+        self.transact_query('compareaddresses', tu)
+        if self.result.__len__():
+            address_id = self.result[0][0]
         else:
             # insert new address
             self.transact_query('insertaddresses', tu)
             address_id = self.lrid
         # Insert id's into adults_addresses
         self.transact_query('insertadults_addresses', (adult_id, address_id))
-         
+
     def __updatepositions(self, adult_id, positions):
         self.transact_query('deletepositions', (adult_id,))
         for position in positions:
@@ -605,14 +602,14 @@ class Database(SqliteDB, Helpers):
         # Insert new numbers
         for line in fonnumbers:
             # Check if number exists
-            result = self.transact_query('checkfonnumber', (line['number'],))
-            if (result.__len__() == True):
-                fonnumber_id = result[0][0]
+            self.transact_query('checkfonnumber', (line['number'],))
+            if self.result.__len__():
+                fonnumber_id = self.result[0][0]
             else:
                 self.transact_query('insertfonnumber', (line['number'],))
                 fonnumber_id = self.lrid
             self.transact_query('insertadults_fonnumbers', (adult_id, fonnumber_id, line['fonnumbertype_id']))
-    
+
     def __updateemail(self, adult_id, email):
         # Delete all entries for adult_id in adults_emailaddresses
         self.transact_query('deleteemail', (adult_id,))
@@ -620,34 +617,34 @@ class Database(SqliteDB, Helpers):
         # Insert new addresses
         for line in email:
             # Check if email address exists
-            result = self.transact_query('checkemail', (line['email'],))
-            if (result.__len__() == True):
-                email_id = result[0][0]
+            self.transact_query('checkemail', (line['email'],))
+            if self.result.__len__():
+                email_id = self.result[0][0]
             else:
                 self.transact_query('insertemail', (line['email'],))
                 email_id = self.lrid
             self.transact_query('insertadults_emailaddresses', (adult_id, email_id, line['note']))
-    
+
     def __updateincome(self, adult_id, income):
         # Delete all lines in income for this adult_id
         self.transact_query('deleteincome', (adult_id,))
         # Insert all incomes
         for line in income:
             self.transact_query('insertincome', (adult_id, line['income'], line['incometype_id']))
-            
+
     def __updatechild(self, data):
         self.transact_query('updatepeople', (data['name'], data['firstname'], data['child_id']))
-        
+
     def __insertchild(self, data):
         self.transact_query('insertpeople', (data['name'], data['firstname'], 'child'))
         child_id = self.lrid
         return child_id
-    
+
     def __updatebirthdate(self, child_id, data):
         self.transact_query('deletebirthdate', (child_id,))
         birthdate = data['birthdate'].isoformat()
         self.transact_query('insertbirthdate', (child_id, birthdate))
-    
+
     def __updatechildbenefit(self, child_id, data):
         self.transact_query('deletechildbenefit', (child_id,))
         if 'benefit' not in data:
@@ -658,7 +655,7 @@ class Database(SqliteDB, Helpers):
         except (ValueError, TypeError):
             return
         self.transact_query('insertchildbenefit', (child_id, benefit))
-            
+
     def __updaterealyear(self, child_id, data):
         self.transact_query('deleterealyear', (child_id,))
         if 'year' not in data:
@@ -673,19 +670,19 @@ class Database(SqliteDB, Helpers):
         except (ValueError, TypeError):
             return
         self.transact_query('insertrealyear', (child_id, year))
-        
+
     def __updatejoindate(self, people_id, date, type_id):
         self.transact_query('deletejoindate', (people_id, type_id))
         if not date == None:
             date = date.isoformat()
             self.transact_query('insertjoindate', (people_id, date, type_id))
-        
+
     def __updateseparationdate(self, people_id, date, type_id):
         self.transact_query('deleteseparationdate', (people_id, type_id))
         if not date == None:
             date = date.isoformat()
             self.transact_query('insertseparationdate', (people_id, date, type_id))
-        
+
     def __updateparents(self, child_id, parents):
         self.transact_query('deleteparents', (child_id,))
         for line in parents:
@@ -700,7 +697,7 @@ class Database(SqliteDB, Helpers):
             startdate = line['startdate'].isoformat()
             enddate = line['enddate'].isoformat()
             self.transact_query('insertrulings', (child_id, line['ruling_id'], startdate, enddate))
-    
+
     def __cleanaddresses(self):
         # Check if there are still other adult_id's pointing
         # to this address
@@ -713,13 +710,3 @@ class Database(SqliteDB, Helpers):
     def __cleanemailaddresses(self):
         # Delete email addresses not used anymore by any person
         self.transact_query('cleanemailaddresses')
-    
-
-        
-        
-       
-       
-        
-
-        
-        

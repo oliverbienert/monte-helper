@@ -3,7 +3,7 @@ Created on Sep 14, 2012
 
 @author: oliver
 '''
-import ConfigParser
+from backports import configparser as ConfigParser
 import io
 import os
 import sys
@@ -18,10 +18,7 @@ class Preferences(object):
         Constructor
         '''
         # Get module directory
-        if getattr(sys, 'frozen', None):
-            basedir = sys._MEIPASS  #@UndefinedVariable
-        else:
-            basedir = os.path.dirname(__file__)
+        basedir = os.path.dirname(__file__)
         # Get default config file
         default_cfgfile = os.path.join(basedir, 'config/.config')
         homedir = os.path.expanduser('~')

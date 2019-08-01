@@ -3,8 +3,8 @@
 
 import os
 import wx
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs #@UnusedImport
+from pubsub import pub
 import Images
 from collections import defaultdict
 
@@ -95,9 +95,9 @@ class PreferencesDlg(wx.Dialog):
             try:
                 attr = getattr(self, k)
                 attr.SetValue(v)
-            except (AttributeError, TypeError), ex:
-                print ex
-                
+            except (AttributeError, TypeError) as ex:
+                print(ex)
+
     def OnDBfile(self, event): # wxGlade: PreferencesDlg.<event_handler>
         dlg = wx.FileDialog(
             self, message=u"Datenbankdatei auswählen",
@@ -114,8 +114,8 @@ class PreferencesDlg(wx.Dialog):
             try:
                 paths = dlg.GetPaths()
                 self.dbfile.SetValue(paths[0])
-            except(Exception), ex:
-                print ex
+            except(Exception) as ex:
+                print(ex)
         # Destroy the dialog.
         dlg.Destroy()
 

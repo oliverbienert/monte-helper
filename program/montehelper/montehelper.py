@@ -9,13 +9,14 @@ import sys
 
 from Listeners import Listeners #@UnusedImport
 from MainFrame import MainFrame as mf
-from wx.lib.pubsub import setupkwargs #@UnusedImport
+from pubsub import setupkwargs #@UnusedImport
 from Preferences import Preferences
 from SimpleRotater import SimpleRotater
 from Database import Database
 
 logger = logging.getLogger('montehelper')
 logger.setLevel(logging.DEBUG)
+
 
 class MonteHelper(wx.App):
     def OnInit(self):

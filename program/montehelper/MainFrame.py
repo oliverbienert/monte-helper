@@ -6,12 +6,13 @@ import os
 from EditAdultFrame import EditAdultFrame as EAF
 from EditChildFrame import EditChildFrame as ECF
 from CalcFeeDialog import CalcFeeDialog as CFD
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs  # @UnusedImport
+from pubsub import pub
 import wx.lib.agw.persist as PM
 from ListView import ListView
 from PreferencesDlg import PreferencesDlg as PD
 from QADateDialog import QADateDialog as QAD
+
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -25,31 +26,35 @@ ID_QA = wx.NewId()
 # Make a shorter alias
 _ = wx.GetTranslation
 
+
 class MainFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         # begin wxGlade: MainFrame.__init__
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
-        
+
         # Menu Bar
         self.mainframe_menubar = wx.MenuBar()
         self.file = wx.Menu()
-        self.preferences = wx.MenuItem(self.file, wx.ID_PREFERENCES, _("&Preferences"), _("Program preferences"), wx.ITEM_NORMAL)
-        self.file.AppendItem(self.preferences)
+        self.preferences = wx.MenuItem(self.file, wx.ID_PREFERENCES, _("&Preferences"), _("Program preferences"),
+                                       wx.ITEM_NORMAL)
+        self.file.Append(self.preferences)
         self.quit = wx.MenuItem(self.file, wx.NewId(), _("&Quit\tCtrl-Q"), _("Exit program"), wx.ITEM_NORMAL)
-        self.file.AppendItem(self.quit)
+        self.file.Append(self.quit)
         self.mainframe_menubar.Append(self.file, _("&File"))
         self.edit = wx.Menu()
         self.insertchild = wx.MenuItem(self.edit, wx.NewId(), _("New &child"), _("Insert new child"), wx.ITEM_NORMAL)
-        self.edit.AppendItem(self.insertchild)
+        self.edit.Append(self.insertchild)
         self.insert = wx.MenuItem(self.edit, wx.NewId(), _("&New adult"), _("Insert new adult"), wx.ITEM_NORMAL)
-        self.edit.AppendItem(self.insert)
+        self.edit.Append(self.insert)
         self.calcfee = wx.MenuItem(self.edit, ID_CF, _("&Calculate fee"), _("Calculate parent's fee"), wx.ITEM_NORMAL)
-        self.edit.AppendItem(self.calcfee)
-        self.quarterannouncement = wx.MenuItem(self.edit, ID_QA, _("&Quarter announcement"), _("Create a quarter announcement"), wx.ITEM_NORMAL)
-        self.edit.AppendItem(self.quarterannouncement)
-        self.deleteperson = wx.MenuItem(self.edit, ID_DP, _("&Delete entry"), _("Delete entry for selected child or adult"), wx.ITEM_NORMAL)
-        self.edit.AppendItem(self.deleteperson)
+        self.edit.Append(self.calcfee)
+        self.quarterannouncement = wx.MenuItem(self.edit, ID_QA, _("&Quarter announcement"),
+                                               _("Create a quarter announcement"), wx.ITEM_NORMAL)
+        self.edit.Append(self.quarterannouncement)
+        self.deleteperson = wx.MenuItem(self.edit, ID_DP, _("&Delete entry"),
+                                        _("Delete entry for selected child or adult"), wx.ITEM_NORMAL)
+        self.edit.Append(self.deleteperson)
         self.mainframe_menubar.Append(self.edit, _("&Edit"))
         wxglade_tmp_menu = wx.Menu()
         self.mainframe_menubar.Append(wxglade_tmp_menu, _("&Help"))
@@ -74,16 +79,16 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnDeletePerson, self.deleteperson)
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnPageChanged, self.notebook_1)
         # end wxGlade
-        
+
         self.editadultframe = None
         self.editchildframe = None
         self.preferencesdialog = None
-        
+
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnAdultsItemActivated, self.adultsview)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnChildrenItemActivated, self.childrenview)
 
         # self.quit.SetBitmap(wx.Image('application-exit.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap())
-        
+
         # Persistence
         homedir = os.path.expanduser('~')
         mhdir = os.path.join(homedir, '.montehelper')
@@ -95,15 +100,15 @@ class MainFrame(wx.Frame):
         self._persistMgr.SetPersistenceFile(configfile)
         self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
         wx.CallAfter(self.__register)
-                
+
         self.__initAdultsView()
         self.__initChildrenView()
-        
+
         # Listeners
-        pub.subscribe(self.PopulateAdults, 'main.populate.adults') #@UndefinedVariable
-        pub.subscribe(self.PopulateChildren, 'main.populate.children') #@UndefinedVariable
-        pub.subscribe(self.ForcePreferencesDlg, 'main.activatepreferencesdlg') #@UndefinedVariable
-        
+        pub.subscribe(self.PopulateAdults, 'main.populate.adults')  # @UndefinedVariable
+        pub.subscribe(self.PopulateChildren, 'main.populate.children')  # @UndefinedVariable
+        pub.subscribe(self.ForcePreferencesDlg, 'main.activatepreferencesdlg')  # @UndefinedVariable
+
     def __set_properties(self):
         # begin wxGlade: MainFrame.__set_properties
         self.SetTitle(_("Monte-Helper"))
@@ -135,8 +140,8 @@ class MainFrame(wx.Frame):
 
     def __initAdultsView(self):
         # self.adultsview.SetColumn('adult_id', 'ID', wx.LIST_FORMAT_RIGHT, 100, stringConverter="%i")
-        self.adultsview.SetColumn('name','Name', wx.LIST_FORMAT_LEFT, 150)
-        self.adultsview.SetColumn('firstname','Vorname', wx.LIST_FORMAT_LEFT, 150)
+        self.adultsview.SetColumn('name', 'Name', wx.LIST_FORMAT_LEFT, 150)
+        self.adultsview.SetColumn('firstname', 'Vorname', wx.LIST_FORMAT_LEFT, 150)
         self.adultsview.SetColumn('home', 'Tel. Privat', wx.LIST_FORMAT_LEFT, 120)
         self.adultsview.SetColumn('work', 'Tel. Arbeit', wx.LIST_FORMAT_LEFT, 120)
         self.adultsview.SetColumn('mobile', 'Tel. Mobil', wx.LIST_FORMAT_LEFT, wx.LIST_AUTOSIZE)
@@ -144,18 +149,18 @@ class MainFrame(wx.Frame):
     def __initChildrenView(self):
         # self.childrenview.SetColumn('child_id', "ID", wx.LIST_FORMAT_RIGHT, 100, stringConverter="%i")
         self.childrenview.SetColumn('name', "Name", wx.LIST_FORMAT_LEFT, 150)
-        self.childrenview.SetColumn('firstname', "Vorname", wx.LIST_FORMAT_LEFT,150)
+        self.childrenview.SetColumn('firstname', "Vorname", wx.LIST_FORMAT_LEFT, 150)
         self.childrenview.SetColumn('birthdate', "Geburtsdatum", wx.LIST_FORMAT_RIGHT, 120, stringConverter="%d.%m.%Y")
         self.childrenview.SetColumn('yc_description', "Klasse (err.)", wx.LIST_FORMAT_RIGHT, 80)
         self.childrenview.SetColumn('ry_description', "Klasse", wx.LIST_FORMAT_RIGHT, 80)
-                                     
+
     def __register(self):
         self.Freeze()
         if not self._persistMgr.RegisterAndRestore(self.notebook_1):
             self.notebook_1.SetSelection(0)
         self.Thaw()
-        pub.sendMessage('main.checkdatabase') #@UndefinedVariable
-    
+        pub.sendMessage('main.checkdatabase')  # @UndefinedVariable
+
     def __getAdultFrame(self, frame):
         if isinstance(frame, wx.Frame):
             if not frame.Save():
@@ -165,10 +170,10 @@ class MainFrame(wx.Frame):
         else:
             self.editadultframe = frame = EAF(self)
             # Frame initialized. We need to fill comboboxes
-            pub.sendMessage('dialog.adult.created') #@UndefinedVariable
+            pub.sendMessage('dialog.adult.created')  # @UndefinedVariable
         frame.Clear()
         return frame
-        
+
     def __getChildFrame(self, frame):
         if isinstance(frame, wx.Frame):
             if not frame.Save():
@@ -178,22 +183,23 @@ class MainFrame(wx.Frame):
         else:
             self.editchildframe = frame = ECF(self)
             # Frame initialized. We need to fill comboboxes
-            pub.sendMessage('dialog.child.created') #@UndefinedVariable
+            pub.sendMessage('dialog.child.created')  # @UndefinedVariable
         frame.Clear()
         return frame
+
     def PopulateAdults(self, adults):
         self.adultsview.SetObjects(adults)
-        
+
     def PopulateChildren(self, children):
         self.childrenview.SetObjects(children)
-        
+
     def ForcePreferencesDlg(self):
         dlg = PD(self)
-        pub.sendMessage('dialog.preferences.activated')  #@UndefinedVariable
+        pub.sendMessage('dialog.preferences.activated')  # @UndefinedVariable
         dlg.ShowModal()
-        pub.sendMessage('main.checkdatabase', init=False)  #@UndefinedVariable
+        pub.sendMessage('main.checkdatabase', init=False)  # @UndefinedVariable
 
-    def OnQuit(self, event): # wxGlade: MainFrame.<event_handler>
+    def OnQuit(self, event):  # wxGlade: MainFrame.<event_handler>
         self.Close()
 
     def OnDestroy(self, event):
@@ -201,18 +207,18 @@ class MainFrame(wx.Frame):
             self.editchildframe.Iconize(False)
         self._persistMgr.SaveAndUnregister()
 
-    def OnAdultsItemActivated(self, event): # wxGlade: MyDialog1.<event_handler>
+    def OnAdultsItemActivated(self, event):  # wxGlade: MyDialog1.<event_handler>
         obj = self.adultsview.GetSelectedObject()
         if obj == None:
-            print "Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!"
+            print("Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!")
             return
         adult_id = obj['adult_id']
         frame = self.editadultframe
         frame = self.__getAdultFrame(frame)
-        pub.sendMessage('dialog.adult.activated', arg1=adult_id) #@UndefinedVariable
+        pub.sendMessage('dialog.adult.activated', arg1=adult_id)  # @UndefinedVariable
         frame.Show()
-        
-    def OnAdultInsert(self, event): # wxGlade: MainFrame.<event_handler>
+
+    def OnAdultInsert(self, event):  # wxGlade: MainFrame.<event_handler>
         frame = self.editadultframe
         frame = self.__getAdultFrame(frame)
         frame.Show()
@@ -220,69 +226,67 @@ class MainFrame(wx.Frame):
     def OnChildrenItemActivated(self, event):
         obj = self.childrenview.GetSelectedObject()
         if obj == None:
-            print "Event handler `OnChildrenItemActivated': Nothing is selected or more than one is selected!"
+            print("Event handler `OnChildrenItemActivated': Nothing is selected or more than one is selected!")
             return
         child_id = obj['child_id']
         frame = self.editchildframe
         frame = self.__getChildFrame(frame)
-        pub.sendMessage('dialog.child.activated', arg1=child_id) #@UndefinedVariable
+        pub.sendMessage('dialog.child.activated', arg1=child_id)  # @UndefinedVariable
         frame.Show()
-                
-    def OnChildInsert(self, event): # wxGlade: MainFrame.<event_handler>
+
+    def OnChildInsert(self, event):  # wxGlade: MainFrame.<event_handler>
         frame = self.editchildframe
         frame = self.__getChildFrame(frame)
         frame.Show()
 
-    def OnCalcFee(self, event): # wxGlade: MainFrame.<event_handler>
+    def OnCalcFee(self, event):  # wxGlade: MainFrame.<event_handler>
         page = self.notebook_1.GetSelection()
         if (page != 0):
             return
         obj = self.adultsview.GetSelectedObject()
         if obj == None:
-            print "Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!"
+            print("Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!")
             return
         dlg = CFD(self)
         adult_id = obj['adult_id']
-        pub.sendMessage('mainframe.edit.calcfee', adult_id = adult_id)  #@UndefinedVariable
+        pub.sendMessage('mainframe.edit.calcfee', adult_id=adult_id)  # @UndefinedVariable
         dlg.ShowModal()
 
-    def OnPageChanged(self, event): # wxGlade: MainFrame.<event_handler>
+    def OnPageChanged(self, event):  # wxGlade: MainFrame.<event_handler>
         page = self.notebook_1.GetSelection()
         if (page == 0):
             self.calcfee.Enable(True)
         else:
             self.calcfee.Enable(False)
-            
-    def OnPreferences(self, event): # wxGlade: MainFrame.<event_handler>
+
+    def OnPreferences(self, event):  # wxGlade: MainFrame.<event_handler>
         dlg = PD(self)
-        pub.sendMessage('dialog.preferences.activated')  #@UndefinedVariable
+        pub.sendMessage('dialog.preferences.activated')  # @UndefinedVariable
         dlg.ShowModal()
 
-    def OnDeletePerson(self, event): # wxGlade: MainFrame.<event_handler>
+    def OnDeletePerson(self, event):  # wxGlade: MainFrame.<event_handler>
         page = self.notebook_1.GetSelection()
         if (page == 0):
             self.__ondelete('adultsview', 'adult_id', 'adult')
         elif (page == 1):
             self.__ondelete('childrenview', 'child_id', 'child')
-            
+
     def __ondelete(self, listviewname, col, msgsfx):
         listview = getattr(self, listviewname)
         obj = listview.GetSelectedObject()
         if obj == None:
-            print "Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!"
+            print("Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!")
             return
             # Show a confirm dialog
-        dlg = wx.MessageDialog(self, u'Wirklich löschen?', u'Löschen', wx.OK|wx.CANCEL|wx.ICON_EXCLAMATION)
+        dlg = wx.MessageDialog(self, u'Wirklich löschen?', u'Löschen', wx.OK | wx.CANCEL | wx.ICON_EXCLAMATION)
         if dlg.ShowModal() != wx.ID_OK:
             return
         person_id = obj[col]
         msgstr = 'mainframe.delete.' + msgsfx
-        pub.sendMessage(msgstr, person_id = person_id)  #@UndefinedVariable
+        pub.sendMessage(msgstr, person_id=person_id)  # @UndefinedVariable
 
     def OnQuarterAnnouncement(self, event):  # wxGlade: MainFrame.<event_handler>
         dlg = QAD(self)
         dlg.ShowModal()
 
 # end of class MainFrame
-
-

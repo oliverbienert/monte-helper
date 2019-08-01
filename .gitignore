@@ -18,3 +18,5 @@ lib
 *.buildpath
 
 
+*.wxg#
+/program/wxglade/

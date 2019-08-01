@@ -4,8 +4,8 @@
 import wx
 from ObjectListView import ObjectListView as olv
 from ObjectListView import ColumnDefn
-from wx.lib.pubsub import setupkwargs #@UnusedImport
-from wx.lib.pubsub import pub
+from pubsub import setupkwargs #@UnusedImport
+from pubsub import pub
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -20,7 +20,7 @@ _ = wx.GetTranslation
 class ParentDialog(wx.Dialog):
     def __init__(self, *args, **kwds):
         # begin wxGlade: ParentDialog.__init__
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
+        kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         wx.Dialog.__init__(self, *args, **kwds)
         self.button_10 = wx.Button(self, wx.ID_CANCEL, "")
 
@@ -70,7 +70,7 @@ class ParentDialog(wx.Dialog):
          ])
         
     def Populate(self, data):
-        self.plv.SetObjects(data)
+        self.plv.SetObjects(list(data))
 
     def OnItemActivated(self, event):
         self.obj = self.plv.GetSelectedObject()

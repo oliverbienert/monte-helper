@@ -20,3 +20,4 @@ lib
 
 *.wxg#
 /program/wxglade/
+/.idea/

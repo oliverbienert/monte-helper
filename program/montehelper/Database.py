@@ -115,7 +115,7 @@ class Database(SqliteDB, Helpers):
                 # Adjust with the difference stored in realyear
                 year_id = item['yearcalculated'] - realyear
                 d['ry_description'] = dct[year_id]
-            except (ValueError, TypeError):
+            except (ValueError, TypeError, KeyError):
                 pass
             del d['year_id']
             lst.append(d)

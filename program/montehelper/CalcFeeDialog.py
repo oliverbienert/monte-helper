@@ -4,6 +4,7 @@
 import wx
 from pubsub import setupkwargs #@UnusedImport
 from pubsub import pub
+from wx import adv
 from ObjectListView import ObjectListView as olv
 from ObjectListView import ColumnDefn
 from Helpers import Helpers
@@ -27,7 +28,7 @@ class CalcFeeDialog(wx.Dialog, WxHelpers, Helpers):
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE
         wx.Dialog.__init__(self, *args, **kwds)
         self.l_validfromdate = wx.StaticText(self, -1, _("Ruling valid from"))
-        self.validfromdate = wx.DatePickerCtrl(self, -1)
+        self.validfromdate = adv.DatePickerCtrl(self, -1, style=adv.DP_ALLOWNONE)
         self.l_receiver = wx.StaticText(self, -1, _("Receiver"))
         self.receiver = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_TAB | wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
         self.l_income = wx.StaticText(self, -1, _("Underlying income"))

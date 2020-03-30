@@ -32,7 +32,9 @@ class CalcFeeDialog(wx.Dialog, WxHelpers, Helpers):
         self.l_receiver = wx.StaticText(self, -1, _("Receiver"))
         self.receiver = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_TAB | wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
         self.l_income = wx.StaticText(self, -1, _("Underlying income"))
+        self.olv_income = olv(self, style=wx.LC_REPORT)
         self.l_calcfee = wx.StaticText(self, -1, _("Individual calculation"))
+        self.olv_calcfee = olv(self, style=wx.LC_REPORT)
         self.l_notes = wx.StaticText(self, -1, _("Notes"))
         self.notes = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE)
         self.b_ok = wx.Button(self, wx.ID_OK, "")
@@ -44,9 +46,7 @@ class CalcFeeDialog(wx.Dialog, WxHelpers, Helpers):
         self.Bind(wx.EVT_BUTTON, self.OnOK, self.b_ok)
         # end wxGlade
 
-        self.olv_income = olv(self, -1, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
         self.__initOLVIncome()
-        self.olv_calcfee = olv(self, -1, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
         self.__initOLVCalcFee()
         self.__do_layout_noglade()
         
@@ -55,7 +55,11 @@ class CalcFeeDialog(wx.Dialog, WxHelpers, Helpers):
     def __set_properties(self):
         # begin wxGlade: CalcFeeDialog.__set_properties
         self.SetTitle(_("Parent's fee"))
-        self.SetSize((673, 558))
+        self.SetSize((686, 707))
+        self.receiver.SetMinSize((656, 106))
+        self.olv_income.SetMinSize((656, 119))
+        self.olv_calcfee.SetMinSize((656, 117))
+        self.notes.SetMinSize((656, 107))
         self.b_ok.SetMinSize((70, 30))
         self.b_cancel.SetMinSize((70, 30))
         # end wxGlade
@@ -130,8 +134,8 @@ class CalcFeeDialog(wx.Dialog, WxHelpers, Helpers):
         ])
 
     def __do_layout_noglade(self):
-        self.sizerIncome.Add(self.olv_income, 1, wx.ALL|wx.EXPAND, 4)
-        self.sizerCalcFee.Add(self.olv_calcfee, 1, wx.ALL|wx.EXPAND, 4)
+        self.sizerIncome.Add(self.olv_income, 1, wx.EXPAND, 0)
+        self.sizerCalcFee.Add(self.olv_calcfee, 1, wx.EXPAND, 0)
         self.Layout()
         
     def Populate(self, data, address):

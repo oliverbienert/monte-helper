@@ -82,16 +82,24 @@ class Listeners(object):
         pub.sendMessage('main.populate.adults', adults=adults) #@UndefinedVariable
         
     def CalculateParentsFee(self, adult_id):
+        # Get the due date to put a child into next school year
         isodate = '{:%Y-%m-%d}'.format(datetime.now())
+        # Get adults and their incomes for calculation of parent's fee
         adults = self.db.getadults_for_calcfee(adult_id)
         if len(adults) == 0:
             logger.info('No children found for this adult: %i' % adult_id)
             return
+        # Get all children to be included in the calculation, ordered by birthdate
         children = self.db.getchildren_for_calcfee(adult_id, isodate)
+        # Get the l_fees table
         fees = self.db.getfees_lookup()
-        cf = CalcFee()
-        data = cf.calc(adults, children, fees)
+        # Create an instance of CalcFee class
+        cf = CalcFee(fees)
+        # Calculate parent's fee
+        data = cf.calc(adults, children)
+        # Get address of the adult that should receive the official notification
         address = self.db.getaddress(data['payer'])
+        # Send the dat to the calcfee dialog for verification
         pub.sendMessage('dialog.calcfee.populate', data=data, address=address)  #@UndefinedVariable
         
     def CreateFeeReport(self, validfromdate, receiver, calcfees, income, notes):

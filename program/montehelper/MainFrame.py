@@ -241,14 +241,18 @@ class MainFrame(wx.Frame):
 
     def OnCalcFee(self, event):  # wxGlade: MainFrame.<event_handler>
         page = self.notebook_1.GetSelection()
-        if (page != 0):
+        # Only if page adults is active
+        if page != 0:
             return
+        # Get the selected adult
         obj = self.adultsview.GetSelectedObject()
-        if obj == None:
+        if obj is None:
             print("Event handler `OnAdultsItemActivated': Nothing is selected or more than one is selected!")
             return
+        # Create the calcfee dialog instance to show result of calculation
         dlg = CFD(self)
         adult_id = obj['adult_id']
+        # Send a message to the pubsub broker to start calculating
         pub.sendMessage('mainframe.edit.calcfee', adult_id=adult_id)  # @UndefinedVariable
         dlg.ShowModal()
 
